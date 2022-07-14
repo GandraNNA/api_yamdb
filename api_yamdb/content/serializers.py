@@ -5,6 +5,7 @@ from .models import Category, Genre, Title
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """Сериализатор для категория"""
 
     class Meta:
         fields = '__all__'
@@ -12,13 +13,14 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class GenreSerializer(serializers.ModelSerializer):
-
+    """Сериализатор для жанра"""
     class Meta:
         fields = '__all__'
         model = Genre
 
 
 class TitleSerializer(serializers.ModelSerializer):
+    """Сериализатор для произвидения"""
     category = SlugRelatedField(
         slug_field='slug', queryset=Category.objects.all()
     )
@@ -32,6 +34,7 @@ class TitleSerializer(serializers.ModelSerializer):
 
 
 class ReadOnlyTitleSerilizer(serializers.ModelSerializer):
+    """Сериализатор счёта рейтинга для произвидения"""
     rating = serializers.IntegerField(
         source='reviews__score__avg', read_only=True
     )

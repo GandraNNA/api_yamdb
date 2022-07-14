@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
+    """Модель для категория"""
     name = models.CharField(
         verbose_name='Название',
         max_length=256
@@ -21,6 +22,7 @@ class Category(models.Model):
         ordering = ['name']
 
 class Genre(models.Model):
+    """Модель для жанра"""
     name = models.CharField(
         verbose_name='Название',
         max_length=256
@@ -41,6 +43,7 @@ class Genre(models.Model):
 
 
 class Title(models.Model):
+    """Модель для произведения"""
     name = models.CharField(
         verbose_name='Название',
         max_length=256
