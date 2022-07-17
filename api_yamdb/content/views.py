@@ -16,6 +16,7 @@ class CategoryViewSet(CreateRetrieveDestroyViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
     lookup_field = 'slug'
+    pagination_class = PageNumberPagination
 
 
 class GenreViewSet(CreateRetrieveDestroyViewSet):
@@ -24,12 +25,14 @@ class GenreViewSet(CreateRetrieveDestroyViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
     lookup_field = 'slug'
+    pagination_class = PageNumberPagination
 
 
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer
     filter_backends = [DjangoFilterBackend]
+    pagination_class = PageNumberPagination
 
     def get_serializer_class(self):
         if self.action in ("retrieve", "list"):

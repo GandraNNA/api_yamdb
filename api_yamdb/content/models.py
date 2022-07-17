@@ -53,7 +53,7 @@ class Title(models.Model):
         null=True,
         blank=True
     )
-    pub_date = models.DateTimeField(
+    year = models.DateTimeField(
         verbose_name='Дата выхода',
         auto_now_add=True
     )

@@ -33,7 +33,7 @@ class TitleSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
-            'pub_date',
+            'year',
             'rating',
             'description',
             'genre',
