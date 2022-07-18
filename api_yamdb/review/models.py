@@ -11,20 +11,23 @@ User = get_user_model()
 class Review(models.Model):
     title = models.ForeignKey(
         Title,
+        verbose_name='Произведение',
         on_delete=models.CASCADE,
-        related_name='review'
+        related_name='reviews'
     )
     text = models.TextField()
     author = models.ForeignKey(
         User,
+        verbose_name='Автор',
         on_delete=models.CASCADE,
         related_name='author'
     )
     # рейтинг отзыва от 1 до 10
-    score = models.IntegerField(validators=(MaxValueValidator(10),
-                                            MinValueValidator(1)))
+    score = models.PositiveSmallIntegerField(
+        validators=(MaxValueValidator(10),
+                    MinValueValidator(1)))
     pub_date = models.DateTimeField(
-        'Дата добавления',
+        verbose_name='Дата добавления',
         auto_now_add=True,
         db_index=True
     )
@@ -37,11 +40,12 @@ class Comment(models.Model):
     text = models.TextField()
     author = models.ForeignKey(
         User,
+        verbose_name='Автор',
         on_delete=models.CASCADE,
         related_name='comments'
     )
     pub_date = models.DateTimeField(
-        'Дата добавления',
+        verbose_name='Дата добавления',
         auto_now_add=True,
         db_index=True
     )
