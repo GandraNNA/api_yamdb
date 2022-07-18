@@ -3,7 +3,7 @@ from django.core.validators import (MinValueValidator,
                                     MaxValueValidator)
 from django.db import models
 
-from context.models import Title
+from content.models import Title
 
 User = get_user_model()
 
