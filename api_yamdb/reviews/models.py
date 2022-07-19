@@ -4,6 +4,9 @@ from django.core.validators import (MinValueValidator,
 from django.db import models
 
 
+from api.validators import validate_date
+
+
 class User(AbstractUser):
     ADMIN = 'admin'
     MODERATOR = 'moderator'
@@ -108,14 +111,9 @@ class Title(models.Model):
         verbose_name='Название',
         max_length=256
     )
-    year = models.DateTimeField(
+    year = models.IntegerField(
         verbose_name='Дата выхода',
-        auto_now_add=True
-    )
-    rating = models.IntegerField(
-        verbose_name='Рейтинг',
-        null=True,
-        default=None
+        validators=[validate_date]
     )
     description = models.TextField(
         verbose_name='Описание',
@@ -123,8 +121,10 @@ class Title(models.Model):
         blank=True
     )
     genre = models.ManyToManyField(
-        Genre,  
+        Genre,
         verbose_name='Жанр',
+        through='GenreTitle',
+        through_fields=('title', 'genre')
     )
     category = models.ForeignKey(
         Category,
@@ -143,6 +143,24 @@ class Title(models.Model):
         ordering = ['name']
 
 
+class GenreTitle(models.Model):
+    title = models.ForeignKey(
+        Title,
+        verbose_name='Произведение',
+        on_delete=models.CASCADE)
+    genre = models.ForeignKey(
+        Genre,
+        verbose_name='Жанр',
+        on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.title}. Жанр : {self.genre}'
+
+    class Meta:
+        verbose_name = 'Произведение и жанр'
+        verbose_name_plural = 'Произведений и жанры'
+
+
 class Review(models.Model):
     title = models.ForeignKey(
         Title,
@@ -159,7 +177,6 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name='author'
     )
-    # рейтинг отзыва от 1 до 10
     score = models.PositiveSmallIntegerField(
         validators=(MaxValueValidator(10),
                     MinValueValidator(1)))

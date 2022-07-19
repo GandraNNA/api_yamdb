@@ -5,5 +5,6 @@ class CreateListDestroyViewSet(
     mixins.ListModelMixin,
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet,
-):
+):  
+    lookup_field = 'slug'
     pass
