@@ -24,6 +24,7 @@ from .serializers import (
 
 
 class CategoryViewSet(CreateListDestroyViewSet):
+    #Вьюсет для категории
     queryset = Category.objects.all().order_by('name')
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -32,6 +33,7 @@ class CategoryViewSet(CreateListDestroyViewSet):
 
 
 class GenreViewSet(CreateListDestroyViewSet):
+    #Вьюсет для Жанра
     queryset = Genre.objects.all().order_by('name')
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -40,6 +42,7 @@ class GenreViewSet(CreateListDestroyViewSet):
 
 
 class TitleViewSet(viewsets.ModelViewSet):
+    #Вьюсет для произведении
     queryset = Title.objects.all().annotate(
         Avg('reviews__score')
     ).order_by('name')
@@ -57,6 +60,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 @api_view(["POST"])
 @permission_classes([permissions.AllowAny])
 def register(request):
+    #Функция регистрации
     serializer = RegisterDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
@@ -78,6 +82,7 @@ def register(request):
 @api_view(["POST"])
 @permission_classes([permissions.AllowAny])
 def get_jwt_token(request):
+    #Функция получение JWT токена
     serializer = TokenSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = get_object_or_404(
@@ -95,6 +100,7 @@ def get_jwt_token(request):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    #Вьюсет для пользователя
     lookup_field = "username"
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -129,6 +135,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
+    #Вьюсет для отзыва
     serializer_class = ReviewSerializer
     permission_classes = [IsAdminModeratorOwnerOrReadOnly]
     pagination_class = PageNumberPagination
@@ -149,6 +156,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    #Вьюсет для комментарий
     serializer_class = CommentSerializer
     permission_classes = [IsAdminModeratorOwnerOrReadOnly]
     pagination_class = PageNumberPagination
