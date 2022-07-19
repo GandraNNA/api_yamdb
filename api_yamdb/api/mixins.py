@@ -1,6 +1,6 @@
 from rest_framework import viewsets, mixins
 
-class CreateRetrieveDestroyViewSet(
+class CreateListDestroyViewSet(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
     mixins.DestroyModelMixin,
