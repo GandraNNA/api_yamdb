@@ -5,6 +5,9 @@ from rest_framework.pagination import PageNumberPagination
 
 from .models import Category, Genre, Title
 from .mixins import CreateRetrieveDestroyViewSet
+from rest_framework.pagination import PageNumberPagination
+from api.permissions import (IsAdmin, IsAdminOrReadOnly,
+                            IsAdminModeratorOwnerOrReadOnly)
 from .serializers import (
     CategorySerializer, GenreSerializer, TitleSerializer,
     ReadOnlyTitleSerilizer)
@@ -13,6 +16,7 @@ from .serializers import (
 class CategoryViewSet(CreateRetrieveDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
     lookup_field = 'slug'
@@ -22,6 +26,7 @@ class CategoryViewSet(CreateRetrieveDestroyViewSet):
 class GenreViewSet(CreateRetrieveDestroyViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
+    permission_classes = (IsAdminOrReadOnly,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name',)
     lookup_field = 'slug'
@@ -31,6 +36,7 @@ class GenreViewSet(CreateRetrieveDestroyViewSet):
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
     serializer_class = TitleSerializer
+    permission_classes = (IsAdminOrReadOnly,)
     filter_backends = [DjangoFilterBackend]
     pagination_class = PageNumberPagination
 

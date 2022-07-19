@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +26,7 @@ INSTALLED_APPS = [
     'django_filters',
     'content',
     'api',
+    'User',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +122,7 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-#     "AUTH_HEADER_TYPES": ("Bearer",),
-# }
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
