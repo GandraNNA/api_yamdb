@@ -48,14 +48,19 @@ class Title(models.Model):
         verbose_name='Название',
         max_length=256
     )
+    year = models.DateTimeField(
+        verbose_name='Дата выхода',
+        auto_now_add=True
+    )
+    rating = models.IntegerField(
+        verbose_name='Рейтинг',
+        null=True,
+        default=None
+    )
     description = models.TextField(
         verbose_name='Описание',
         null=True,
         blank=True
-    )
-    pub_date = models.DateTimeField(
-        verbose_name='Дата выхода',
-        auto_now_add=True
     )
     genre = models.ManyToManyField(
         Genre,  
@@ -67,11 +72,6 @@ class Title(models.Model):
         on_delete=models.SET_NULL,
         related_name='titles',
         null=True
-    )
-    rating = models.IntegerField(
-        verbose_name='Рейтинг',
-        null=True,
-        default=None
     )
 
     def __str__(self):

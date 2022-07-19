@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Category, Genre, Title
+
+
+admin.register(Category)
+admin.register(Genre)
+admin.register(Title)
