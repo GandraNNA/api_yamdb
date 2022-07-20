@@ -4,7 +4,7 @@ from reviews.models import Title
 
 
 class TitlesFilter(filters.FilterSet):
-    #Кастомный фильтр для произведении
+    # Кастомный фильтр для произведении
     name = filters.CharFilter(
         field_name='name',
         lookup_expr='icontains'
