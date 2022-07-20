@@ -3,7 +3,6 @@ from django.core.validators import (MinValueValidator,
                                     MaxValueValidator)
 from django.db import models
 
-
 from api.validators import validate_date
 
 
@@ -64,7 +63,6 @@ class User(AbstractUser):
 
 
 class Category(models.Model):
-    """Модель для категория"""
     name = models.CharField(
         verbose_name='Название',
         max_length=256
@@ -85,7 +83,6 @@ class Category(models.Model):
 
 
 class Genre(models.Model):
-    """Модель для жанра"""
     name = models.CharField(
         verbose_name='Название',
         max_length=256
@@ -98,7 +95,7 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
@@ -106,7 +103,6 @@ class Genre(models.Model):
 
 
 class Title(models.Model):
-    """Модель для произведения"""
     name = models.CharField(
         verbose_name='Название',
         max_length=256
