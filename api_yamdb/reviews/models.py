@@ -3,8 +3,7 @@ from django.core.validators import (MinValueValidator,
                                     MaxValueValidator)
 from django.db import models
 
-
-from .validators import validate_date
+from reviews.validators import validate_date
 
 
 class User(AbstractUser):
@@ -18,23 +17,23 @@ class User(AbstractUser):
     ]
 
     email = models.EmailField(
-        verbose_name='Адрес электронной почты',
+        'Адрес электронной почты',
         unique=True,
     )
     username = models.CharField(
-        verbose_name='Имя пользователя',
+        'Имя пользователя',
         max_length=150,
         null=True,
         unique=True
     )
     role = models.CharField(
-        verbose_name='Роль',
+        'Роль',
         max_length=50,
         choices=ROLES,
         default=USER
     )
     bio = models.TextField(
-        verbose_name='Биография',
+        'Биография',
         null=True,
         blank=True
     )
@@ -64,14 +63,12 @@ class User(AbstractUser):
 
 
 class Category(models.Model):
-    """Модель для категория"""
     name = models.CharField(
-        verbose_name='Название',
+        'Название',
         max_length=256
     )
     slug = models.SlugField(
-        verbose_name='slug',
-        max_length=50,
+        'slug',
         unique=True
     )
 
@@ -81,41 +78,39 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        ordering = ['name']
+        ordering = ('name',)
 
 
 class Genre(models.Model):
-    """Модель для жанра"""
     name = models.CharField(
-        verbose_name='Название',
+        'Название',
         max_length=256
     )
     slug = models.SlugField(
-        verbose_name='slug',
+        'slug',
         unique=True
     )
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
-        ordering = ['name']
+        ordering = ('name',)
 
 
 class Title(models.Model):
-    """Модель для произведения"""
     name = models.CharField(
-        verbose_name='Название',
+        'Название',
         max_length=256
     )
     year = models.PositiveSmallIntegerField(
-        verbose_name='Дата выхода',
+        'Дата выхода',
         validators=[validate_date]
     )
     description = models.TextField(
-        verbose_name='Описание',
+        'Описание',
         blank=True
     )
     genre = models.ManyToManyField(
@@ -138,7 +133,7 @@ class Title(models.Model):
     class Meta:
         verbose_name = 'Произведение'
         verbose_name_plural = 'Произведений'
-        ordering = ['name']
+        ordering = ('name',)
 
 
 class GenreTitle(models.Model):
@@ -167,7 +162,7 @@ class Review(models.Model):
         related_name='reviews'
     )
     text = models.TextField(
-        verbose_name='Текст',
+        'Текст',
     )
     author = models.ForeignKey(
         User,
@@ -176,10 +171,10 @@ class Review(models.Model):
         related_name='author'
     )
     score = models.PositiveSmallIntegerField(
-        validators=(MaxValueValidator(10),
-                    MinValueValidator(1)))
+        validators=(MaxValueValidator(10, 'Максимальная оценка - 10'),
+                    MinValueValidator(1, 'Минимальная оценка - 1')))
     pub_date = models.DateTimeField(
-        verbose_name='Дата добавления',
+        'Дата добавления',
         auto_now_add=True,
         db_index=True
     )
@@ -187,7 +182,7 @@ class Review(models.Model):
     class Meta:
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
-        ordering = ['pub_date']
+        ordering = ('pub_date',)
         constraints = [
             models.UniqueConstraint(
                 fields=['title', 'author'],
@@ -204,7 +199,7 @@ class Comment(models.Model):
         related_name='comments'
     )
     text = models.TextField(
-        verbose_name='Текст',
+        'Текст',
     )
     author = models.ForeignKey(
         User,
@@ -213,7 +208,7 @@ class Comment(models.Model):
         related_name='comments'
     )
     pub_date = models.DateTimeField(
-        verbose_name='Дата добавления',
+        'Дата добавления',
         auto_now_add=True,
         db_index=True
     )
@@ -221,4 +216,4 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
-        ordering = ['pub_date']
+        ordering = ('pub_date',)
