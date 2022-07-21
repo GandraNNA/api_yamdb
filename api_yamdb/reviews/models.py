@@ -111,13 +111,12 @@ class Title(models.Model):
         verbose_name='Название',
         max_length=256
     )
-    year = models.IntegerField(
+    year = models.PositiveSmallIntegerField(
         verbose_name='Дата выхода',
         validators=[validate_date]
     )
     description = models.TextField(
         verbose_name='Описание',
-        null=True,
         blank=True
     )
     genre = models.ManyToManyField(
