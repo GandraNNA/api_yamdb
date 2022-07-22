@@ -4,7 +4,7 @@ from django.core.validators import (MinValueValidator,
 from django.db import models
 
 
-from api.validators import validate_date
+from .validators import validate_date
 
 
 class User(AbstractUser):
@@ -51,7 +51,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     class Meta:
-        ordering = ['id']
+        ordering = ('id',)
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
 
@@ -92,7 +92,6 @@ class Genre(models.Model):
     )
     slug = models.SlugField(
         verbose_name='slug',
-        max_length=50,
         unique=True
     )
 
